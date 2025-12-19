@@ -3,6 +3,7 @@ const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, Browsers
 const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
+const fs = require('fs-extra');
 
 // In-memory store for active Baileys sockets
 const activeSockets = new Map();
@@ -15,20 +16,18 @@ const activeSockets = new Map();
 async function createWhatsAppConnection(sessionId, onUpdate) {
     console.log(`[+] Initializing WhatsApp connection for session: ${sessionId}`);
 
-    // Define the path for storing authentication state
     const authPath = path.join(__dirname, '..', 'storage', 'auth_info', sessionId);
     const { state, saveCreds } = await useMultiFileAuthState(authPath);
 
     const socket = makeWASocket({
-        logger: pino({ level: 'silent' }), // Use 'info' for detailed logs
-        printQRInTerminal: false, // We'll handle the QR code manually
-        browser: Browsers.macOS('Desktop'),
+        logger: pino({ level: 'silent' }),
+        printQRInTerminal: false,
+        browser: Browsers.appropriate('Chrome'),
         auth: state,
         shouldSyncHistoryMessage: () => false,
         syncFullHistory: false,
     });
 
-    // Store the socket in our map
     activeSockets.set(sessionId, socket);
 
     socket.ev.on('creds.update', saveCreds);
@@ -45,18 +44,19 @@ async function createWhatsAppConnection(sessionId, onUpdate) {
             const shouldReconnect = (lastDisconnect.error)?.output?.statusCode !== DisconnectReason.loggedOut;
             console.log(`[!] Connection closed for session ${sessionId}. Reason: ${lastDisconnect.error}. Reconnecting: ${shouldReconnect}`);
 
-            // Clean up the socket
             activeSockets.delete(sessionId);
 
+            // If the disconnection was unexpected, clean up the session data
             if (shouldReconnect) {
-                // Optionally, you could attempt to reconnect here.
-                // For this use case, we'll just let the session end.
+                console.log(`[*] Cleaning up corrupted session data for: ${sessionId}`);
+                fs.removeSync(authPath);
             }
-            onUpdate({ event: 'close' });
+
+            onUpdate({ event: 'close', reconnect: shouldReconnect });
+
         } else if (connection === 'open') {
             console.log(`[+] WhatsApp connection opened for session: ${sessionId}`);
 
-            // Generate the final session token
             const token = `whiz_${uuidv4().replace(/-/g, '').substring(0, 14)}`;
 
             onUpdate({
@@ -67,7 +67,6 @@ async function createWhatsAppConnection(sessionId, onUpdate) {
                 }
             });
 
-            // We can close the socket after a short delay to ensure the client receives the token
             setTimeout(() => {
                 socket.logout();
             }, 3000);
@@ -77,11 +76,6 @@ async function createWhatsAppConnection(sessionId, onUpdate) {
     return socket;
 }
 
-/**
- * Retrieves an active Baileys socket by session ID.
- * @param {string} sessionId - The session ID of the socket to retrieve.
- * @returns {Socket|undefined} The active socket, or undefined if not found.
- */
 function getSocket(sessionId) {
     return activeSockets.get(sessionId);
 }

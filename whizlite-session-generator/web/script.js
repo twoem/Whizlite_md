@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let sessionId = null;
 
     async function initializeSession() {
+        // Reset UI to initial state
+        qrCodeImage.style.display = 'none';
+        loadingSpinner.style.display = 'block';
+        statusMessage.textContent = 'Generating QR code, please wait...';
+        tokenContainer.style.display = 'none';
+
         try {
             const response = await fetch('/session');
             const data = await response.json();
@@ -30,8 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         eventSource.onerror = () => {
-            statusMessage.textContent = 'Connection lost. Please refresh.';
+            statusMessage.textContent = 'Connection lost. Attempting to reconnect...';
             eventSource.close();
+            // The server will automatically clean up, and the client will re-initialize
+            setTimeout(initializeSession, 3000); // Re-initialize after a delay
         };
     }
 
@@ -50,7 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusMessage.textContent = `Authenticated with ${eventData.data.jid}`;
                 break;
             case 'close':
-                statusMessage.textContent = 'Connection closed. Please refresh to start over.';
+                if (eventData.reconnect) {
+                    statusMessage.textContent = 'Connection closed unexpectedly. Generating a new QR code...';
+                    // The server will clean up, and we'll start a new session.
+                    setTimeout(initializeSession, 2000);
+                } else {
+                    statusMessage.textContent = 'Connection closed. Please refresh to start over.';
+                }
                 break;
         }
     }
