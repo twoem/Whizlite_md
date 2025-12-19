@@ -1,0 +1,6 @@
+Whizlite-Session-Generator is running at http://localhost:3000
+[+] New session created: e36b7220-c254-43db-8e98-b637d91cf6ea
+[*] Generating QR code for URL: http://localhost:3000/scan/e36b7220-c254-43db-8e98-b637d91cf6ea
+[+] Client connected for session: e36b7220-c254-43db-8e98-b637d91cf6ea
+[+] Token generated for session e36b7220-c254-43db-8e98-b637d91cf6ea: whiz_fafd5c455629
+[-] Client disconnected for session: e36b7220-c254-43db-8e98-b637d91cf6ea

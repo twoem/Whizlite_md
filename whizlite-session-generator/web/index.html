@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiz-Lite-MD Session Generator</title>
+    <title>Whiz-Lite MD | Session Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Scan QR Code to Authenticate</h1>
-    <div id="qr-code"></div>
+    <div class="container">
+        <header>
+            <h1>Whiz-Lite MD Session Generator</h1>
+            <p>Scan the QR code with your mobile device to authenticate.</p>
+        </header>
+        <main>
+            <div id="qr-container">
+                <div id="loading-spinner" class="spinner"></div>
+                <img id="qr-code" src="" alt="QR Code" style="display: none;">
+            </div>
+            <div id="status-container">
+                <p id="status-message">Generating QR code, please wait...</p>
+            </div>
+            <div id="token-container" style="display: none;">
+                <h2>Your Session ID:</h2>
+                <pre id="session-token"></pre>
+                <p class="notice">This is your session ID. Do not share it with anyone.</p>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Whiz-Tech. All rights reserved.</p>
+        </footer>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

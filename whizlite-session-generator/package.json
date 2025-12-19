@@ -8,5 +8,10 @@
   },
   "author": "Whiz-Tech",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^5.2.1",
+    "qrcode": "^1.5.4",
+    "sse-express": "^1.0.2",
+    "uuid": "^13.0.0"
+  }
 }
