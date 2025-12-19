@@ -72,6 +72,12 @@ header p {
     min-height: 24px;
 }
 
+.coming-soon {
+    font-size: 14px;
+    color: #999;
+    margin-top: 15px;
+}
+
 #token-container {
     margin-top: 20px;
     padding: 20px;

@@ -9,7 +9,9 @@
   "author": "Whiz-Tech",
   "license": "ISC",
   "dependencies": {
+    "baileys": "^7.0.0-rc.9",
     "express": "^5.2.1",
+    "pino": "^10.1.0",
     "qrcode": "^1.5.4",
     "sse-express": "^1.0.2",
     "uuid": "^13.0.0"
