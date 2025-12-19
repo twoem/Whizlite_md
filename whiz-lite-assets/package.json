@@ -1,0 +1,9 @@
+{
+  "name": "whiz-lite-assets",
+  "version": "1.0.0",
+  "description": "Protected command kernel and assets storage.",
+  "main": "kernel/brain.js",
+  "author": "Whiz-Tech",
+  "license": "ISC",
+  "dependencies": {}
+}

@@ -1,0 +1,12 @@
+{
+  "name": "whizlite-session-generator",
+  "version": "1.0.0",
+  "description": "Secure authentication and 14-character token generation.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Whiz-Tech",
+  "license": "ISC",
+  "dependencies": {}
+}
