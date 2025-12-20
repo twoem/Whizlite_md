@@ -4,7 +4,7 @@ const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs-extra');
-const { PhoneNumber } = require('awesome-phonenumber');
+const PhoneNumber = require('awesome-phonenumber');
 
 // In-memory store for active Baileys sockets
 const activeSockets = new Map();
