@@ -4,6 +4,7 @@ const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs-extra');
+const { PhoneNumber } = require('awesome-phonenumber');
 
 // In-memory store for active Baileys sockets
 const activeSockets = new Map();
@@ -12,8 +13,9 @@ const activeSockets = new Map();
  * Creates and initializes a new WhatsApp connection.
  * @param {string} sessionId - The unique session ID for this connection.
  * @param {function} onUpdate - Callback function to handle updates (e.g., QR code, connection status).
+ * @param {string} [phoneNumber=null] - Optional phone number for pairing code generation.
  */
-async function createWhatsAppConnection(sessionId, onUpdate) {
+async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null) {
     console.log(`[+] Initializing WhatsApp connection for session: ${sessionId}`);
 
     const authPath = path.join(__dirname, '..', 'storage', 'auth_info', sessionId);
@@ -32,10 +34,20 @@ async function createWhatsAppConnection(sessionId, onUpdate) {
 
     socket.ev.on('creds.update', saveCreds);
 
-    socket.ev.on('connection.update', (update) => {
+    socket.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
 
-        if (qr) {
+        if (connection === 'open') {
+            console.log(`[+] WhatsApp connection opened for session: ${sessionId}`);
+            const token = `whiz_${uuidv4().replace(/-/g, '').substring(0, 14)}`;
+            onUpdate({
+                event: 'authenticated',
+                data: { token, jid: socket.user.id }
+            });
+            setTimeout(() => {
+                socket.logout();
+            }, 3000);
+        } else if (qr) {
             console.log(`[*] QR code generated for session: ${sessionId}`);
             onUpdate({ event: 'qr', data: qr });
         }
@@ -54,24 +66,23 @@ async function createWhatsAppConnection(sessionId, onUpdate) {
 
             onUpdate({ event: 'close', reconnect: shouldReconnect });
 
-        } else if (connection === 'open') {
-            console.log(`[+] WhatsApp connection opened for session: ${sessionId}`);
-
-            const token = `whiz_${uuidv4().replace(/-/g, '').substring(0, 14)}`;
-
-            onUpdate({
-                event: 'authenticated',
-                data: {
-                    token,
-                    jid: socket.user.id
-                }
-            });
-
-            setTimeout(() => {
-                socket.logout();
-            }, 3000);
         }
     });
+
+    if (phoneNumber) {
+        const pn = new PhoneNumber(phoneNumber).getNumber('e164');
+        if (!pn) {
+            onUpdate({ event: 'error', data: 'Invalid phone number' });
+            return;
+        }
+        try {
+            const code = await socket.requestPairingCode(pn);
+            onUpdate({ event: 'pair-code', data: code });
+        } catch (error) {
+            console.error('Failed to request pairing code:', error);
+            onUpdate({ event: 'error', data: 'Failed to request pairing code' });
+        }
+    }
 
     return socket;
 }

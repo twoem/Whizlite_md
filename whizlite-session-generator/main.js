@@ -48,6 +48,25 @@ app.get('/session', (req, res) => {
     res.json({ sessionId });
 });
 
+app.get('/pair', async (req, res) => {
+    const { number } = req.query;
+    if (!number) {
+        return res.status(400).send('Phone number is required');
+    }
+
+    const sessionId = uuidv4();
+    sessions[sessionId] = { status: 'pending', qr: null, token: null };
+    console.log(`[+] New pairing session created: ${sessionId} for number: ${number}`);
+
+    createWhatsAppConnection(sessionId, (update) => {
+        if (sseConnections[sessionId]) {
+            sseConnections[sessionId].sse('message', update);
+        }
+    }, number);
+
+    res.json({ sessionId });
+});
+
 /**
  * @api {get} /events/:sessionId Subscribe to real-time session updates
  * @apiName GetSessionEvents

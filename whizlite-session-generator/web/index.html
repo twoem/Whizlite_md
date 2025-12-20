@@ -1,36 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiz-Lite MD | Session Generator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      whizlite - WhatsApp Pair
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Whiz-Lite MD Session Generator</h1>
-            <p>Scan the QR code with your mobile device to authenticate.</p>
-        </header>
-        <main>
-            <div id="qr-container">
-                <div id="loading-spinner" class="spinner"></div>
-                <img id="qr-code" src="" alt="QR Code" style="display: none;">
+      <div class="header">
+        <div class="logo">
+          <i class="fas fa-robot"></i>
+        </div>
+        <h1 class="title">
+          whizlite
+        </h1>
+        <p class="subtitle">
+          Connect your WhatsApp account
+        </p>
+        <div class="mode-toggle">
+          <button class="mode-btn active" data-mode="pair">
+            Pair Code
+          </button>
+          <button class="mode-btn" data-mode="qr">
+            QR Code
+          </button>
+        </div>
+        <div class="social-icons">
+          <a href="https://www.whizlite.zone.id" target="_blank" class="website">          <i class="fas fa-globe"></i>
+</a>
+          <a href="https://github.com/whizlitebot/whizlite_md/issues" target="_blank" class="github">          <i class="fab fa-github"></i>
+</a>
+          <a href="https://whatsapp.com/channel/0029Vb6W1z3JP20yBZLZs01P" target="_blank" class="whatsapp">          <i class="fab fa-whatsapp"></i>
+</a>
+          <a href="mailto:whiz.techke@gmail.com" class="email">          <i class="fas fa-envelope"></i>
+</a>
+        </div>
+      </div>
+      <!-- Pair Code Section -->
+      <div class="content-section active" id="pair-section">
+        <div class="input-group">
+          <label class="input-label">
+            Enter your WhatsApp number with country code
+          </label>
+          <input type="tel" id="mobileNumber" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code" />
+          <p style="font-size: 12px; color: var(--secondary-color); margin-top: 5px;">
+            Example: 923427582273 (92 for Pakistan)
+          </p>
+        </div>
+        <button class="generate-btn" id="submit">
+          <i class="fas fa-key"></i>
+          Generate Pair Code
+        </button>
+        <div class="loading" id="loading">
+          <i class="fas fa-spinner"></i>
+        </div>
+        <div class="code-display" id="codeDisplay">
+          Your pair code will appear here
+        </div>
+        <button class="copy-btn" id="copy" onclick="copyCode()">
+          <i class="fas fa-copy"></i>
+          Copy Code
+        </button>
+      </div>
+      <!-- QR Code Section -->
+      <div class="content-section" id="qr-section">
+        <div class="qr-container">
+          <div class="qr-image-container">
+            <img id="qr-image" src="/server" alt="QR CODE" class="qr-image" />
+            <div class="qr-loading" id="qrLoading">
+              <i class="fas fa-spinner"></i>
             </div>
-            <div id="status-container">
-                <p id="status-message">Generating QR code, please wait...</p>
-                <p class="coming-soon">Pairing Code Coming Soon</p>
-            </div>
-            <div id="token-container" style="display: none;">
-                <h2>Your Session ID:</h2>
-                <pre id="session-token"></pre>
-                <p class="notice">This is your session ID. Do not share it with anyone.</p>
-            </div>
-        </main>
-        <footer>
-            <p>&copy; 2024 Whiz-Tech. All rights reserved.</p>
-        </footer>
+          </div>
+          <div class="qr-timer">
+            <p>
+              Scan the QR code within
+              <span id="time-left">              30
+</span>
+              seconds
+            </p>
+            <progress value="0" max="30" id="progressBar">
+            </progress>
+          </div>
+          <button class="reload-button" id="reloadQR">
+            <i class="fas fa-sync-alt"></i>
+            Regenerate QR Code
+          </button>
+        </div>
+      </div>
+      <div class="footer">
+        <p>
+          © 2025 Whiz-Tech
+        </p>
+      </div>
     </div>
-    <script src="script.js"></script>
-</body>
+    <!-- Toast -->
+    <div id="toast">
+      Code Copied
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js">
+    </script>
+    <script src="script.js">
+    </script>
+  </body>
 </html>
