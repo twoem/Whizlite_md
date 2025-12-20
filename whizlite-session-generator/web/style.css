@@ -114,3 +114,18 @@ footer {
     font-size: 12px;
     color: #aaa;
 }
+
+.social-links {
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: #555;
+    margin: 0 10px;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #3498db;
+}
