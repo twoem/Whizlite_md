@@ -1,5 +1,5 @@
 
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, Browsers } = require('baileys');
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, Browsers, fetchLatestBaileysVersion } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
@@ -20,8 +20,10 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
 
     const authPath = path.join(__dirname, '..', 'storage', 'auth_info', sessionId);
     const { state, saveCreds } = await useMultiFileAuthState(authPath);
+    const { version } = await fetchLatestBaileysVersion();
 
     const socket = makeWASocket({
+        version,
         logger: pino({ level: 'silent' }),
         printQRInTerminal: false,
         browser: Browsers.appropriate('Chrome'),
@@ -33,6 +35,24 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
     activeSockets.set(sessionId, socket);
 
     socket.ev.on('creds.update', saveCreds);
+
+    if (phoneNumber && !socket.authState.creds.registered) {
+        const phone = new PhoneNumber('+' + phoneNumber);
+        if (!phone.isValid()) {
+            onUpdate({ event: 'error', data: 'Invalid phone number' });
+            return;
+        }
+        const numberForPairing = phone.getNumber('e164').replace('+', '');
+        setTimeout(async () => {
+            try {
+                const code = await socket.requestPairingCode(numberForPairing);
+                onUpdate({ event: 'pair-code', data: code });
+            } catch (error) {
+                console.error('Failed to request pairing code:', error);
+                onUpdate({ event: 'error', data: 'Failed to request pairing code' });
+            }
+        }, 1500);
+    }
 
     socket.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect, qr } = update;
@@ -58,32 +78,14 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
 
             activeSockets.delete(sessionId);
 
-            // If the disconnection was unexpected, clean up the session data
             if (shouldReconnect) {
                 console.log(`[*] Cleaning up corrupted session data for: ${sessionId}`);
                 fs.removeSync(authPath);
             }
 
             onUpdate({ event: 'close', reconnect: shouldReconnect });
-
         }
     });
-
-    if (phoneNumber) {
-        const phone = new PhoneNumber('+' + phoneNumber);
-        if (!phone.isValid()) {
-            onUpdate({ event: 'error', data: 'Invalid phone number' });
-            return;
-        }
-        const numberForPairing = phone.getNumber('e164').replace('+', '');
-        try {
-            const code = await socket.requestPairingCode(numberForPairing);
-            onUpdate({ event: 'pair-code', data: code });
-        } catch (error) {
-            console.error('Failed to request pairing code:', error);
-            onUpdate({ event: 'error', data: 'Failed to request pairing code' });
-        }
-    }
 
     return socket;
 }
