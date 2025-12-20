@@ -78,11 +78,6 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
 
             activeSockets.delete(sessionId);
 
-            if (shouldReconnect) {
-                console.log(`[*] Cleaning up corrupted session data for: ${sessionId}`);
-                fs.removeSync(authPath);
-            }
-
             onUpdate({ event: 'close', reconnect: shouldReconnect });
         }
     });
