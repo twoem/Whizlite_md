@@ -9,13 +9,20 @@
   "author": "Whiz-Tech",
   "license": "ISC",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.5.0",
-    "express": "^5.2.1",
-    "fs-extra": "^11.2.0",
-    "pino": "^10.1.0",
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^6.7.21",
+    "awesome-phonenumber": "7.2.0",
+    "dotenv": "^16.4.7",
+    "fs-extra": "^11.3.0",
+    "node-fetch": "^3.3.2",
+    "pastebin-api": "^7.0.0",
+    "pino": "^9.5.0",
+    "phone": "3.1.55",
+    "body-parser": "^1.20.3",
+    "path": "^0.12.7",
+    "express": "^4.21.2",
+    "pm2": "^5.4.2",
     "qrcode": "^1.5.4",
-    "sse-express": "^1.0.2",
-    "uuid": "^13.0.0",
-    "awesome-phonenumber": "^2.64.0"
+    "qrcode-terminal": "^0.12.0"
   }
 }
