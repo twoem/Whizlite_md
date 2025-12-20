@@ -135,11 +135,11 @@
       box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .social-icons a.youtube {
-      background: #FF0000;
+    .social-icons a.website {
+      background: #8b5cf6;
     }
-    .social-icons a.telegram {
-      background: #0088cc;
+    .social-icons a.email {
+      background: #ea4335;
     }
     .social-icons a.whatsapp {
       background: #25D366;
