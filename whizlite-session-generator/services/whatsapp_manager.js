@@ -67,9 +67,6 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
                 event: 'authenticated',
                 data: { token, jid: socket.user.id }
             });
-            setTimeout(() => {
-                socket.logout();
-            }, 3000);
         } else if (qr) {
             console.log(`[*] QR code generated for session: ${sessionId}`);
             onUpdate({ event: 'qr', data: qr });
