@@ -70,13 +70,14 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
     });
 
     if (phoneNumber) {
-        const pn = new PhoneNumber(phoneNumber).getNumber('e164');
-        if (!pn) {
+        const phone = new PhoneNumber('+' + phoneNumber);
+        if (!phone.isValid()) {
             onUpdate({ event: 'error', data: 'Invalid phone number' });
             return;
         }
+        const numberForPairing = phone.getNumber('e164').replace('+', '');
         try {
-            const code = await socket.requestPairingCode(pn);
+            const code = await socket.requestPairingCode(numberForPairing);
             onUpdate({ event: 'pair-code', data: code });
         } catch (error) {
             console.error('Failed to request pairing code:', error);

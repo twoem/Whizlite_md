@@ -13,3 +13,17 @@ Whizlite-Session-Generator is running at http://localhost:3000
 [-] Client disconnected for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
 [*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
 [*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[*] QR code generated for session: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[*] QR code generated for session: f2f516dc-1e09-49e3-94dd-f62ed7383628
+[!] Connection closed for session 6c923cf0-6ba8-4cb7-9511-9b213ffce870. Reason: Error: QR refs attempts ended. Reconnecting: true
+[*] Cleaning up corrupted session data for: 6c923cf0-6ba8-4cb7-9511-9b213ffce870
+[!] Connection closed for session f2f516dc-1e09-49e3-94dd-f62ed7383628. Reason: Error: QR refs attempts ended. Reconnecting: true
+[*] Cleaning up corrupted session data for: f2f516dc-1e09-49e3-94dd-f62ed7383628
