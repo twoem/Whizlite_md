@@ -3,15 +3,13 @@
 > node main.js
 
 Whizlite-Session-Generator is running at http://localhost:3000
-[+] New session created: b16cb5ae-2d8c-433e-be66-29b8075dc987
-[+] Initializing WhatsApp connection for session: b16cb5ae-2d8c-433e-be66-29b8075dc987
-[+] Client connected for session: b16cb5ae-2d8c-433e-be66-29b8075dc987
-[+] New session created: 308f2655-b1d3-46e9-bb41-759f444974e5
-[+] Initializing WhatsApp connection for session: 308f2655-b1d3-46e9-bb41-759f444974e5
-[-] Client disconnected for session: b16cb5ae-2d8c-433e-be66-29b8075dc987
-[+] Client connected for session: 308f2655-b1d3-46e9-bb41-759f444974e5
-[-] Client disconnected for session: 308f2655-b1d3-46e9-bb41-759f444974e5
-[*] QR code generated for session: 308f2655-b1d3-46e9-bb41-759f444974e5
-[*] QR code generated for session: b16cb5ae-2d8c-433e-be66-29b8075dc987
-[*] QR code generated for session: 308f2655-b1d3-46e9-bb41-759f444974e5
-[*] QR code generated for session: b16cb5ae-2d8c-433e-be66-29b8075dc987
+[+] New session created: f8244fe4-7a39-47b3-b28a-f5e0bad687eb
+[+] Initializing WhatsApp connection for session: f8244fe4-7a39-47b3-b28a-f5e0bad687eb
+[+] Client connected for session: f8244fe4-7a39-47b3-b28a-f5e0bad687eb
+[+] New session created: 4d4f5f08-3c74-45d4-b365-a86b149d177f
+[+] Initializing WhatsApp connection for session: 4d4f5f08-3c74-45d4-b365-a86b149d177f
+[-] Client disconnected for session: f8244fe4-7a39-47b3-b28a-f5e0bad687eb
+[+] Client connected for session: 4d4f5f08-3c74-45d4-b365-a86b149d177f
+[-] Client disconnected for session: 4d4f5f08-3c74-45d4-b365-a86b149d177f
+[*] QR code generated for session: f8244fe4-7a39-47b3-b28a-f5e0bad687eb
+[*] QR code generated for session: 4d4f5f08-3c74-45d4-b365-a86b149d177f
