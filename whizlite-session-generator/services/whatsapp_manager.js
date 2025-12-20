@@ -45,7 +45,10 @@ async function createWhatsAppConnection(sessionId, onUpdate, phoneNumber = null)
         const numberForPairing = phone.getNumber('e164').replace('+', '');
         setTimeout(async () => {
             try {
-                const code = await socket.requestPairingCode(numberForPairing);
+                let code = await socket.requestPairingCode(numberForPairing);
+                if (code) {
+                    code = code.match(/.{1,4}/g)?.join('-') || code;
+                }
                 onUpdate({ event: 'pair-code', data: code });
             } catch (error) {
                 console.error('Failed to request pairing code:', error);
