@@ -8,3 +8,6 @@ This repository handles secure authentication and the generation of 14-character
 -   **MongoDB session storage:** Securely stores session data.
 -   **Token generation service:** Generates `whiz_XXXXXXXXXXXXXX` tokens.
 -   **Environment configuration:** Manages environment variables.
+
+## Environment variables for Whizlite-Session-Generator
+  'MONGO_URI=your_mongodb_connection_string_here'
