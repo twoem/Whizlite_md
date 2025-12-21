@@ -10,4 +10,4 @@ This repository handles secure authentication and the generation of 14-character
 -   **Environment configuration:** Manages environment variables.
 
 ## Environment variables for Whizlite-Session-Generator
-  'MONGO_URI=your_mongodb_connection_string_here'
+  `MONGO_URI=your_mongodb_connection_string_here`
