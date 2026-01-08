@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whiz-Lite MD | Session Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Whiz-Lite MD Session Generator</h1>
+            <p>Scan the QR code with your mobile device to authenticate.</p>
+        </header>
+        <main>
+            <div id="qr-container">
+                <div id="loading-spinner" class="spinner"></div>
+                <img id="qr-code" src="" alt="QR Code" style="display: none;">
+            </div>
+            <div id="status-container">
+                <p id="status-message">Generating QR code, please wait...</p>
+                <p class="coming-soon">Pairing Code Coming Soon</p>
+            </div>
+            <div id="token-container" style="display: none;">
+                <h2>Your Session ID:</h2>
+                <pre id="session-token"></pre>
+                <p class="notice">This is your session ID. Do not share it with anyone.</p>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Whiz-Tech. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@whizlitebot" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
+                <a href="https://github.com/whizlitebot" target="_blank" class="github"><i class="fab fa-github"></i></a>
+                <a href="https://whatsapp.com/channel/0029Vb6W1z3JP20yBZLZs01P" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

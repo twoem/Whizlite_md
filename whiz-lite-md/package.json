@@ -1,0 +1,14 @@
+{
+  "name": "whiz-lite-md",
+  "version": "1.0.0",
+  "description": "Public bridge for the Whiz-Lite-MD ecosystem.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "Whiz-Tech",
+  "license": "ISC",
+  "dependencies": {
+    "baileys": "^7.0.0-rc.9"
+  }
+}
